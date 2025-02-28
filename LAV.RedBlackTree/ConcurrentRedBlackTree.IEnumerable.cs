@@ -23,6 +23,59 @@ namespace LAV.RedBlackTree
             return new Enumerator(this, _root, _nil);
         }
 
+        private IEnumerable<T> GetSnapshotInternal()
+        {
+            var result = new List<T>();
+            InOrderTraversal(_root, result);
+            return result.AsReadOnly();
+        }
+        public IEnumerable<T> GetSnapshot()
+        {
+            _lock.EnterReadLock();
+            try
+            {
+                return GetSnapshotInternal();
+            }
+            finally
+            {
+                _lock.ExitReadLock();
+            }
+        }
+
+        private List<T> ToListInternal()
+        {
+            var result = new List<T>();
+            var stack = new Stack<Node>();
+            Node current = _root;
+
+            while (current != _nil || stack.Count > 0)
+            {
+                while (current != _nil)
+                {
+                    stack.Push(current);
+                    current = current.Left;
+                }
+
+                current = stack.Pop();
+                result.Add(current.Key);
+                current = current.Right;
+            }
+
+            return result;
+        }
+        public List<T> ToList()
+        {
+            _lock.EnterReadLock();
+            try
+            {
+                return ToListInternal();
+            }
+            finally
+            {
+                _lock.ExitReadLock();
+            }
+        }
+
         private sealed class Enumerator : IEnumerator<T>
         {
             private readonly ConcurrentRedBlackTree<T> _tree;

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net452;netstandard2.0</TargetFrameworks>
+		<TargetFrameworks>net452;netstandard2.0;netstandard2.1</TargetFrameworks>
 		<OutputType>Library</OutputType>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -21,15 +21,15 @@
 	</PropertyGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net452'">
-
+		<Compile Remove="ConcurrentRedBlackTree.IAsyncEnumerable.cs" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-
+		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="9.0.2" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Remove="FastRedBlackTree.cs" />
+		<Compile Remove="FastRedBlackTree.cs" />
 	</ItemGroup>
 
 	<!-- Shared dependencies for both frameworks 
