@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>net452;net9.0</TargetFrameworks>
+	  <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net9.0'">
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	
+  <ItemGroup>
+    <ProjectReference Include="..\LAV.RedBlackTree\LAV.RedBlackTree.csproj" />
+  </ItemGroup>
+
+</Project>
